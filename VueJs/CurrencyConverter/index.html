@@ -1,0 +1,117 @@
+<html>
+   <head>
+      <title>VueJs Instance</title>
+      <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   </head>
+   <body>
+      <style>
+         #databinding{
+            padding: 20px 15px 15px 15px;
+            margin: 0 0 25px 0;
+            width: auto;
+            background-color: #e7e7e7;
+         }
+         span, option, input {
+            font-size:25px;
+         }
+      </style>
+      
+      <div id = "databinding" style = "">
+         <h1>Currency Converter</h1>
+         <span>Enter Amount:</span><input type = "number" v-model.number = "amount" placeholder = "Enter Amount" /><br/><br/>
+         <span>Convert From:</span>
+         <select v-model = "convertfrom" style = "width:300px;font-size:25px;">
+            <option v-for = "(a, index) in currencyfrom"  v-bind:value = "a.name">{{a.desc}}</option>
+         </select>
+         <span>Convert To:</span>
+         <select v-model = "convertto" style = "width:300px;font-size:25px;">
+            <option v-for = "(a, index) in currencyfrom" v-bind:value = "a.name">{{a.desc}}</option>
+         </select><br/><br/>
+         <span> {{amount}} {{convertfrom}} equals {{finalamount}} {{convertto}}</span>
+      </div>
+      
+      <script type = "text/javascript">
+         var vm = new Vue({
+            el: '#databinding',
+            data: {
+               name:'',
+               currencyfrom : [
+                  {name : "USD", desc:"US Dollar"},
+                  {name:"EUR", desc:"Euro"},
+                  {name:"HKD", desc:"HK Dollar"},
+                  {name:"CNY", desc:"CN Yuan"}
+               ],
+               convertfrom: "HKD",
+               convertto:"USD",
+               amount :""
+            },
+            computed :{
+               finalamount:function() {
+                  var to = this.convertto;
+                  var from = this.convertfrom;
+                  var final;
+                  switch(from) {
+                     case "HKD":
+                     if (to == "USD") {
+                        final = this.amount * 0.13;
+                     }
+                     if (to == "EUR") {
+                        final = this.amount * 0.11;
+                     }
+                     if (to == "HKD") {
+                        final = this.amount;
+                     }
+                     if (to == "CNY") {
+                        final = this.amount * 0.83;
+                     }
+                     break;
+                     case "USD":
+                     if (to == "HKD") {
+                        final = this.amount * 7.77;
+                     }
+                     if (to == "EUR") {
+                        final = this.amount * 0.85;
+                     }
+                     if (to == "USD") {
+                        final = this.amount;
+                     }
+                     if (to == "CNY") {
+                        final = this.amount * 6.47;
+                     }
+                     break;
+                     case "EUR":
+                     if (to == "HKD") {
+                        final = this.amount * 9.17;
+                     }
+                     if (to == "USD") {
+                        final = this.amount * 1.18;
+                     }
+                     if (to == "EUR") {
+                        final = this.amount;
+                     }
+                     if (to == "CNY") {
+                        final = this.amount * 7.64;
+                     }
+                     break;
+                     case "CNY":
+                     if (to == "HKD") {
+                        final = this.amount * 1.2;
+                     }
+                     if (to == "USD") {
+                        final = this.amount * 0.15;
+                     }
+                     if (to == "EUR") {
+                        final = this.amount * 0.13;
+                     }
+                     if (to == "CNY") {
+                        final = this.amount;
+                     }
+                     break
+                  }
+                  return final;
+               }
+            }
+         });
+      </script>
+   </body>
+</html>
